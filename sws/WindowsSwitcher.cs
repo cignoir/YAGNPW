@@ -40,7 +40,7 @@ namespace sws
         [DllImport("user32.dll")]
         extern static int UnregisterHotKey(IntPtr HWnd, int ID);
 
-        public static void ActiveWindow(IntPtr hWnd)
+        private void ActivateWindow(IntPtr hWnd)
         {
             if(hWnd == IntPtr.Zero)
             {
@@ -275,7 +275,7 @@ namespace sws
                 foreach(Process proc in Process.GetProcesses()){
                     if(proc.Id == int.Parse(match.Groups["id"].Value))
                     {
-                        ActiveWindow(proc.MainWindowHandle);
+                        ActivateWindow(proc.MainWindowHandle);
                     }
                     else
                     {
