@@ -5,12 +5,12 @@ using System.Runtime.InteropServices;
 // アセンブリに関する一般情報は以下の属性セットをとおして制御されます。
 // アセンブリに関連付けられている情報を変更するには、
 // これらの属性値を変更してください。
-[assembly: AssemblyTitle("sws")]
-[assembly: AssemblyDescription("")]
+[assembly: AssemblyTitle("YAGNPW")]
+[assembly: AssemblyDescription("You ain't gonna need plural windows.")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
-[assembly: AssemblyProduct("sws")]
-[assembly: AssemblyCopyright("Copyright ©  2014")]
+[assembly: AssemblyCompany("Cignoir")]
+[assembly: AssemblyProduct("YAGNPW")]
+[assembly: AssemblyCopyright("Copyright © Shulla Cignoir 2014")]
 [assembly: AssemblyTrademark("")]
 [assembly: AssemblyCulture("")]
 

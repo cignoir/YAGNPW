@@ -405,8 +405,8 @@
             this.Controls.Add(this.listBox);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
+            this.MaximizeBox = false;
             this.Name = "WindowsSwitcher";
-            this.ShowIcon = false;
             this.Text = "YAGNPW - You ain\'t gonna need plural windows. ";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.WindowsSwitcher_FormClosing);
             this.Load += new System.EventHandler(this.WindowsSwitcher_Load);
