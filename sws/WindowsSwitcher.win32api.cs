@@ -66,6 +66,7 @@ namespace sws
         private const int SW_SHOWNORMAL = 1;
         private const int SW_SHOWMINIMIZED = 2;
         private const int SW_SHOW = 5;
+        private const int SW_SHOWMINNOACTIVE = 7;
         private const int SW_RESTORE = 9;
         private const int SW_FORCEMINIMIZE = 11;
 
@@ -101,5 +102,17 @@ namespace sws
         private const uint SPI_SETFOREGROUNDLOCKTIMEOUT = 0x2001;
         private const uint SPIF_UPDATEINIFILE = 0x01;
         private const uint SPIF_SENDCHANGE = 0x02;
+
+        [DllImport("user32.dll", SetLastError = true)]
+        private static extern void SwitchToThisWindow(IntPtr hWnd, bool fAltTab);
+
+        [DllImport("user32.dll", CharSet = CharSet.Auto)]
+        static extern IntPtr SendMessage(IntPtr hWnd, UInt32 Msg, int wParam, int lParam);
+
+        const UInt32 WM_CLOSE = 0x0010;
+
+        const int WM_SYSCOMMAND = 274;
+        const int SC_MAXIMIZE = 0xF030;
+        const int SC_MINIMIZE = 0xF020;
     }
 }

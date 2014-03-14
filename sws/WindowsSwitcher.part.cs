@@ -30,7 +30,10 @@ namespace sws
 
             if(IsIconic(hWnd))
             {
-                ShowWindowAsync(hWnd, SW_RESTORE);
+                //SendMessage(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
+                //ShowWindowAsync(hWnd, SW_RESTORE);
+                //SetFocus(hWnd);
+                SwitchToThisWindow(hWnd, true);
             }
 
             IntPtr forehWnd=GetForegroundWindow();
@@ -53,8 +56,9 @@ namespace sws
             SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0,
                 SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW | SWP_ASYNCWINDOWPOS);
             BringWindowToTop(hWnd);
-            ShowWindowAsync(hWnd, SW_SHOW);
+            //ShowWindowAsync(hWnd, SW_SHOW);
             SetFocus(hWnd);
+            SwitchToThisWindow(hWnd, true);
 
             if(foreThread != thisThread)
             {
@@ -211,8 +215,9 @@ namespace sws
             {
                 return;
             }
-
-            ShowWindowAsync(hWnd, SW_SHOWMINIMIZED);
+            SendMessage(hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
+            //SendMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
+            //ShowWindowAsync(hWnd, SW_SHOWMINNOACTIVE);
         }
 
     }
