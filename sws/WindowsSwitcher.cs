@@ -26,8 +26,6 @@ namespace sws
         const int WM_HOTKEY4 = 0x0004;
         const int WM_HOTKEY5 = 0x0005;
 
-        Regex regex = new Regex(@"^.+\((?<id>\d+)\)$");
-
         public WindowsSwitcher()
         {
             InitializeComponent();
@@ -167,7 +165,7 @@ namespace sws
                 {
                     if(process.ProcessName.Contains(filterTextBox.Text))
                     {
-                        listBox.Items.Add(String.Format("{0} ({1})", process.ProcessName, process.Id));
+                        listBox.Items.Add(String.Format("{0} @{1}", process.ProcessName, process.Id));
                     }
                 }
             }
@@ -187,7 +185,7 @@ namespace sws
             foreach(var process in processes){
                 if(!process.MainWindowHandle.Equals(IntPtr.Zero))
                 {
-                    listBox.Items.Add(String.Format("{0} ({1})", process.ProcessName, process.Id));
+                    listBox.Items.Add(String.Format("{0} @{1}", process.ProcessName, process.Id));
                 }
             }
             listBox.SetSelected(0, true);
@@ -247,39 +245,47 @@ namespace sws
         protected override void WndProc(ref Message m)
         {
             base.WndProc(ref m);
-            Match match = null;
+            int procId = 0;
+            string[] split = null;
             if(m.Msg == WM_HOTKEY){
                 switch((int)m.WParam){
                     case WM_HOTKEY1:
-                        match = regex.Match(label1.Text);
+                        split = label1.Text.Split('@');
                         break;
                     case WM_HOTKEY2:
-                        match = regex.Match(label2.Text);
+                        split = label2.Text.Split('@');
                         break;
                     case WM_HOTKEY3:
-                        match = regex.Match(label3.Text);
+                        split = label3.Text.Split('@');
                         break;
                     case WM_HOTKEY4:
-                        match = regex.Match(label4.Text);
+                        split = label4.Text.Split('@');
                         break;
                     case WM_HOTKEY5:
-                        match = regex.Match(label5.Text);
+                        split = label5.Text.Split('@');
                         break;
                     default:
-                        match = null;
                         break;
                 }
+                procId = split.Length > 0 ? int.Parse(split[split.Length - 1]) : 0;
             }
 
-            if(match != null && match.Success){
+            if(procId != 0)
+            {
                 foreach(Process proc in Process.GetProcesses()){
-                    if(proc.Id == int.Parse(match.Groups["id"].Value))
+                    if(!proc.MainWindowHandle.Equals(IntPtr.Zero))
                     {
-                        ActivateWindow(proc.MainWindowHandle);
-                    }
-                    else
-                    {
-                        HideWindow(proc.MainWindowHandle);
+                        if(proc.Id == procId)
+                        {
+                            ActivateWindow(proc.MainWindowHandle);
+                        }
+                        else
+                        {
+                            if(!IsIconic(proc.MainWindowHandle))
+                            {
+                                HideWindow(proc.MainWindowHandle);
+                            }
+                        }
                     }
                 }
             }
