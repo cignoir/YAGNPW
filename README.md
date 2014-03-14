@@ -10,7 +10,7 @@ You ain't gonna need plural windows.
 
 ## 動作環境
 - Windows 7/8/8.1
-- .NET Framework 4.5
+- .NET Framework 4.5 or later
 
 ## ダウンロード
 https://dl.dropboxusercontent.com/u/40069781/gaze/YAGNPW.exe
