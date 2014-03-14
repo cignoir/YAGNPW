@@ -180,7 +180,7 @@ namespace sws
                     default:
                         break;
                 }
-                procId = split.Length > 0 ? int.Parse(split[split.Length - 1]) : 0;
+                procId = split.Length > 1 ? int.Parse(split[split.Length - 1]) : 0;
             }
 
             if(procId != 0)
