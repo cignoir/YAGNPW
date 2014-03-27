@@ -218,7 +218,7 @@ namespace sws
                             {
                                 try
                                 {
-                                    HideWindow(proc.MainWindowHandle);
+                                    //HideWindow(proc.MainWindowHandle);
                                 }
                                 catch
                                 {
