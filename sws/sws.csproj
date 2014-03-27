@@ -74,9 +74,6 @@
     <Compile Include="WindowsSwitcher.part.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="WindowsSwitcher.win32api.cs">
-      <SubType>Form</SubType>
-    </Compile>
     <EmbeddedResource Include="WindowsSwitcher.resx">
       <DependentUpon>WindowsSwitcher.cs</DependentUpon>
     </EmbeddedResource>

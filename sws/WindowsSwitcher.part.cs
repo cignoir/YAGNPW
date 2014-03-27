@@ -78,7 +78,11 @@ namespace sws
                 {
                     if(process.ProcessName.Contains(filterTextBox.Text))
                     {
-                        listBox.Items.Add(String.Format("{0} @{1}", process.ProcessName, process.Id));
+                        var itemName = String.Format("{0} @{1}", process.ProcessName, process.Id);
+                        if(!setList.Contains(itemName))
+                        {
+                            listBox.Items.Add(String.Format("{0} @{1}", process.ProcessName, process.Id));
+                        }
                     }
                 }
             }
@@ -101,7 +105,11 @@ namespace sws
             {
                 if(!process.MainWindowHandle.Equals(IntPtr.Zero))
                 {
-                    listBox.Items.Add(String.Format("{0} @{1}", process.ProcessName, process.Id));
+                    var itemName = String.Format("{0} @{1}", process.ProcessName, process.Id);
+                    if(!setList.Contains(itemName))
+                    {
+                        listBox.Items.Add(String.Format("{0} @{1}", process.ProcessName, process.Id));
+                    }
                 }
             }
             listBox.SetSelected(0, true);

@@ -16,6 +16,8 @@ namespace sws
 {
     public partial class WindowsSwitcher: Form
     {
+        List<string> setList = new List<string>();
+
         private void filterButton_Click(object sender, EventArgs e)
         {
             FilterListBox();
@@ -24,7 +26,11 @@ namespace sws
         private void button1_Click(object sender, EventArgs e)
         {
             if(listBox.SelectedItems.Count != 0){
+                if(label1.Text.Length != 0) setList.Remove(label1.Text);
+
                 label1.Text = listBox.SelectedItem.ToString();
+                setList.Add(label1.Text);
+                FilterListBox();
             }
         }
 
@@ -32,7 +38,10 @@ namespace sws
         {
             if(listBox.SelectedItems.Count != 0)
             {
+                if(label2.Text.Length != 0) setList.Remove(label2.Text);
                 label2.Text = listBox.SelectedItem.ToString();
+                setList.Add(label2.Text);
+                FilterListBox();
             }
         }
 
@@ -40,7 +49,10 @@ namespace sws
         {
             if(listBox.SelectedItems.Count != 0)
             {
+                if(label3.Text.Length != 0) setList.Remove(label3.Text);
                 label3.Text = listBox.SelectedItem.ToString();
+                setList.Add(label3.Text);
+                FilterListBox();
             }
         }
 
@@ -48,7 +60,10 @@ namespace sws
         {
             if(listBox.SelectedItems.Count != 0)
             {
+                if(label4.Text.Length != 0) setList.Remove(label4.Text);
                 label4.Text = listBox.SelectedItem.ToString();
+                setList.Add(label4.Text);
+                FilterListBox();
             }
         }
 
@@ -56,32 +71,45 @@ namespace sws
         {
             if(listBox.SelectedItems.Count != 0)
             {
+                if(label5.Text.Length != 0) setList.Remove(label5.Text);
                 label5.Text = listBox.SelectedItem.ToString();
+                setList.Add(label5.Text);
+                FilterListBox();
             }
         }
 
         private void deleteButton1_Click(object sender, EventArgs e)
         {
+            setList.Remove(label1.Text);
+            FilterListBox();
             label1.Text = String.Empty;
         }
 
         private void deleteButton2_Click(object sender, EventArgs e)
         {
+            setList.Remove(label2.Text);
+            FilterListBox();
             label2.Text = String.Empty;
         }
 
         private void deleteButton3_Click(object sender, EventArgs e)
         {
+            setList.Remove(label3.Text);
+            FilterListBox();
             label3.Text = String.Empty;
         }
 
         private void deleteButton4_Click(object sender, EventArgs e)
         {
+            setList.Remove(label4.Text);
+            FilterListBox();
             label4.Text = String.Empty;
         }
 
         private void deleteButton5_Click(object sender, EventArgs e)
         {
+            setList.Remove(label5.Text);
+            FilterListBox();
             label5.Text = String.Empty;
         }
 
