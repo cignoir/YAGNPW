@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YAGNPW;
 
 namespace sws
 {
@@ -86,7 +87,7 @@ namespace sws
 
         private void WindowsSwitcher_Load(object sender, EventArgs e)
         {
-            RegisterAllHotkeys(MOD_ALT);
+            RegisterAllHotkeys(Win32API.MOD_ALT);
             UpdateGroupBoxText("ALT");
         }
 

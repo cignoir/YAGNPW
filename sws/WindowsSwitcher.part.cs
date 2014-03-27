@@ -10,6 +10,7 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using YAGNPW;
 
 namespace sws
 {
@@ -28,42 +29,42 @@ namespace sws
                 return;
             }
 
-            if(IsIconic(hWnd))
+            if(Win32API.IsIconic(hWnd))
             {
                 //SendMessage(hWnd, WM_SYSCOMMAND, SC_MAXIMIZE, 0);
                 //ShowWindowAsync(hWnd, SW_RESTORE);
                 //SetFocus(hWnd);
-                SwitchToThisWindow(hWnd, true);
+                Win32API.SwitchToThisWindow(hWnd, true);
             }
 
-            IntPtr forehWnd=GetForegroundWindow();
+            IntPtr forehWnd = Win32API.GetForegroundWindow();
             if(forehWnd == hWnd)
             {
                 return;
             }
-            uint foreThread = GetWindowThreadProcessId(forehWnd, IntPtr.Zero);
-            uint thisThread = GetCurrentThreadId();
+            uint foreThread = Win32API.GetWindowThreadProcessId(forehWnd, IntPtr.Zero);
+            uint thisThread = Win32API.GetCurrentThreadId();
             uint timeout = 200000;
             if(foreThread != thisThread)
             {
-                SystemParametersInfoGet(SPI_GETFOREGROUNDLOCKTIMEOUT, 0, ref timeout, 0);
-                SystemParametersInfoSet(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, 0, 0);
+                Win32API.SystemParametersInfoGet(Win32API.SPI_GETFOREGROUNDLOCKTIMEOUT, 0, ref timeout, 0);
+                Win32API.SystemParametersInfoSet(Win32API.SPI_SETFOREGROUNDLOCKTIMEOUT, 0, 0, 0);
 
-                AttachThreadInput(thisThread, foreThread, true);
+                Win32API.AttachThreadInput(thisThread, foreThread, true);
             }
 
-            SetForegroundWindow(hWnd);
-            SetWindowPos(hWnd, HWND_TOP, 0, 0, 0, 0,
-                SWP_NOMOVE | SWP_NOSIZE | SWP_SHOWWINDOW | SWP_ASYNCWINDOWPOS);
-            BringWindowToTop(hWnd);
+            Win32API.SetForegroundWindow(hWnd);
+            Win32API.SetWindowPos(hWnd, Win32API.HWND_TOP, 0, 0, 0, 0,
+                Win32API.SWP_NOMOVE | Win32API.SWP_NOSIZE | Win32API.SWP_SHOWWINDOW | Win32API.SWP_ASYNCWINDOWPOS);
+            Win32API.BringWindowToTop(hWnd);
             //ShowWindowAsync(hWnd, SW_SHOW);
-            SetFocus(hWnd);
-            SwitchToThisWindow(hWnd, true);
+            Win32API.SetFocus(hWnd);
+            Win32API.SwitchToThisWindow(hWnd, true);
 
             if(foreThread != thisThread)
             {
-                SystemParametersInfoSet(SPI_SETFOREGROUNDLOCKTIMEOUT, 0, timeout, 0);
-                AttachThreadInput(thisThread, foreThread, false);
+                Win32API.SystemParametersInfoSet(Win32API.SPI_SETFOREGROUNDLOCKTIMEOUT, 0, timeout, 0);
+                Win32API.AttachThreadInput(thisThread, foreThread, false);
             }
         }
 
@@ -108,33 +109,33 @@ namespace sws
 
         private void RegisterAllHotkeys(int modKeys)
         {
-            RegisterHotKey(this.Handle, WM_HOTKEY1, modKeys, (int)Keys.D1);
-            RegisterHotKey(this.Handle, WM_HOTKEY2, modKeys, (int)Keys.D2);
-            RegisterHotKey(this.Handle, WM_HOTKEY3, modKeys, (int)Keys.D3);
-            RegisterHotKey(this.Handle, WM_HOTKEY4, modKeys, (int)Keys.D4);
-            RegisterHotKey(this.Handle, WM_HOTKEY5, modKeys, (int)Keys.D5);
+            Win32API.RegisterHotKey(this.Handle, Win32API.WM_HOTKEY1, modKeys, (int)Keys.D1);
+            Win32API.RegisterHotKey(this.Handle, Win32API.WM_HOTKEY2, modKeys, (int)Keys.D2);
+            Win32API.RegisterHotKey(this.Handle, Win32API.WM_HOTKEY3, modKeys, (int)Keys.D3);
+            Win32API.RegisterHotKey(this.Handle, Win32API.WM_HOTKEY4, modKeys, (int)Keys.D4);
+            Win32API.RegisterHotKey(this.Handle, Win32API.WM_HOTKEY5, modKeys, (int)Keys.D5);
         }
 
         private void RegisterHotkeysByMOD()
         {
             if(altRadioButton.Checked)
             {
-                RegisterAllHotkeys(MOD_ALT);
+                RegisterAllHotkeys(Win32API.MOD_ALT);
                 UpdateGroupBoxText("ALT");
             }
             else if(ctrlRadioButton.Checked)
             {
-                RegisterAllHotkeys(MOD_CONTROL);
+                RegisterAllHotkeys(Win32API.MOD_CONTROL);
                 UpdateGroupBoxText("CTRL");
             }
             else if(winRadioButton.Checked)
             {
-                RegisterAllHotkeys(MOD_WIN);
+                RegisterAllHotkeys(Win32API.MOD_WIN);
                 UpdateGroupBoxText("WIN");
             }
             else if(shiftRadioButton.Checked)
             {
-                RegisterAllHotkeys(MOD_SHIFT);
+                RegisterAllHotkeys(Win32API.MOD_SHIFT);
                 UpdateGroupBoxText("SHIFT");
             }
         }
@@ -150,11 +151,11 @@ namespace sws
 
         private void UnregisterAllHotkeys()
         {
-            UnregisterHotKey(this.Handle, WM_HOTKEY1);
-            UnregisterHotKey(this.Handle, WM_HOTKEY2);
-            UnregisterHotKey(this.Handle, WM_HOTKEY3);
-            UnregisterHotKey(this.Handle, WM_HOTKEY4);
-            UnregisterHotKey(this.Handle, WM_HOTKEY5);
+            Win32API.UnregisterHotKey(this.Handle, Win32API.WM_HOTKEY1);
+            Win32API.UnregisterHotKey(this.Handle, Win32API.WM_HOTKEY2);
+            Win32API.UnregisterHotKey(this.Handle, Win32API.WM_HOTKEY3);
+            Win32API.UnregisterHotKey(this.Handle, Win32API.WM_HOTKEY4);
+            Win32API.UnregisterHotKey(this.Handle, Win32API.WM_HOTKEY5);
         }
 
         protected override void WndProc(ref Message m)
@@ -162,23 +163,23 @@ namespace sws
             base.WndProc(ref m);
             int procId = 0;
             string[] split = null;
-            if(m.Msg == WM_HOTKEY)
+            if(m.Msg == Win32API.WM_HOTKEY)
             {
                 switch((int)m.WParam)
                 {
-                    case WM_HOTKEY1:
+                    case Win32API.WM_HOTKEY1:
                         split = label1.Text.Split('@');
                         break;
-                    case WM_HOTKEY2:
+                    case Win32API.WM_HOTKEY2:
                         split = label2.Text.Split('@');
                         break;
-                    case WM_HOTKEY3:
+                    case Win32API.WM_HOTKEY3:
                         split = label3.Text.Split('@');
                         break;
-                    case WM_HOTKEY4:
+                    case Win32API.WM_HOTKEY4:
                         split = label4.Text.Split('@');
                         break;
-                    case WM_HOTKEY5:
+                    case Win32API.WM_HOTKEY5:
                         split = label5.Text.Split('@');
                         break;
                     default:
@@ -195,13 +196,25 @@ namespace sws
                     {
                         if(proc.Id == procId)
                         {
-                            ActivateWindow(proc.MainWindowHandle);
+                            try
+                            {
+                                ActivateWindow(proc.MainWindowHandle);
+                            }
+                            catch
+                            {
+                            }
                         }
                         else
                         {
-                            if(!IsIconic(proc.MainWindowHandle))
+                            if(!Win32API.IsIconic(proc.MainWindowHandle))
                             {
-                                HideWindow(proc.MainWindowHandle);
+                                try
+                                {
+                                    HideWindow(proc.MainWindowHandle);
+                                }
+                                catch
+                                {
+                                }
                             }
                         }
                     }
@@ -215,7 +228,7 @@ namespace sws
             {
                 return;
             }
-            SendMessage(hWnd, WM_SYSCOMMAND, SC_MINIMIZE, 0);
+            Win32API.SendMessage(hWnd, Win32API.WM_SYSCOMMAND, Win32API.SC_MINIMIZE, 0);
             //SendMessage(hWnd, WM_CLOSE, IntPtr.Zero, IntPtr.Zero);
             //ShowWindowAsync(hWnd, SW_SHOWMINNOACTIVE);
         }
